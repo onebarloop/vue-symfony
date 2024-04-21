@@ -7,7 +7,8 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 }
 
 Encore.enableStimulusBridge('./assets/controllers.json')
-.enableVueLoader()
+  .enableVueLoader()
+  .enableTypeScriptLoader()
   // directory where compiled assets will be stored
   .setOutputPath('public/build/')
   // public path used by the web server to access the output path
@@ -21,12 +22,10 @@ Encore.enableStimulusBridge('./assets/controllers.json')
    * Each entry will result in one JavaScript file (e.g. app.js)
    * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
    */
-  .addEntry('app', './assets/app.js')
+  .addEntry('app', './assets/app.ts')
 
   // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
   .splitEntryChunks()
-
-   
 
   // will require an extra script tag for runtime.js
   // but, you probably want this, unless you're building a single-page app
@@ -43,18 +42,18 @@ Encore.enableStimulusBridge('./assets/controllers.json')
   .enableBuildNotifications()
   .enableSourceMaps(!Encore.isProduction())
   // enables hashed filenames (e.g. app.abc123.css)
-  .enableVersioning(Encore.isProduction())
+  .enableVersioning(Encore.isProduction());
 
-  // configure Babel
-  // .configureBabel((config) => {
-  //     config.plugins.push('@babel/a-babel-plugin');
-  // })
+// configure Babel
+// .configureBabel((config) => {
+//     config.plugins.push('@babel/a-babel-plugin');
+// })
 
-  // enables and configure @babel/preset-env polyfills
-  .configureBabelPresetEnv((config) => {
-    config.useBuiltIns = 'usage';
-    config.corejs = '3.23';
-  });
+// enables and configure @babel/preset-env polyfills
+// .configureBabelPresetEnv((config) => {
+//   config.useBuiltIns = 'usage';
+//   config.corejs = '3.23';
+// });
 
 // enables Sass/SCSS support
 //.enableSassLoader()

@@ -1,26 +1,22 @@
-<script setup>
-import { ref } from 'vue';
+<script setup lang="ts">
+import { useFetch } from '../composables/fetch';
 
 defineProps({
   data: String,
 });
 
-const dataArray = ref(null);
-
-async function fetchData() {
-  const res = await fetch('/api');
-  const data = await res.json();
-  console.log(data);
-  dataArray.value = data;
-}
+const { data, error } = useFetch('/api');
 </script>
 
 <template>
   <div>This is a vue component</div>
   <div>Receiving data from controller as prop:</div>
-  <div>{{ data }}</div>
-  <button @click="fetchData">Click</button>
-  <ul v-for="item in dataArray">
-    <li>{{ item }}</li>
-  </ul>
+  <button>Click</button>
+  <div v-if="error">{{ error }}</div>
+  <div v-if="data">
+    <ul v-for="item in data">
+      <li>{{ item }}</li>
+    </ul>
+  </div>
+  <div v-else>...</div>
 </template>
